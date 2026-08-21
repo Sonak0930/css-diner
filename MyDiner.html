@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Diner - CSS Box Model</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4ead8;
+            color: #333;
+        }
+
+        header {
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            background: #8b5e3c;
+            color: white;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        #levelText {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           전체 게임
+        ========================= */
+
+        .game {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+
+        /* =========================
+           왼쪽 게임 영역
+        ========================= */
+
+        .game-area {
+            flex: 1;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .mission {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .mission h2 {
+            margin-bottom: 8px;
+        }
+
+        .mission p {
+            margin: 5px;
+            color: #666;
+        }
+
+
+        /* =========================
+           도시락
+        ========================= */
+
+        .lunchbox {
+            width: 500px;
+            height: 350px;
+
+            position: relative;
+
+            background: #d4c29c;
+
+            border: 14px solid #775c3b;
+            border-radius: 30px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.2),
+                inset 0 0 10px rgba(0,0,0,0.15);
+        }
+
+
+        /* =========================
+           목표 영역
+        ========================= */
+
+        .target {
+            position: absolute;
+
+            border: 4px dashed white;
+
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(255,255,255,0.15),
+                    rgba(255,255,255,0.15) 10px,
+                    rgba(255,255,255,0.05) 10px,
+                    rgba(255,255,255,0.05) 20px
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+            font-weight: bold;
+
+            z-index: 1;
+        }
+
+
+        /* =========================
+           사용자가 조절하는 반찬
+        ========================= */
+
+        #food {
+            position: absolute;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #ff9a52;
+
+            font-size: 34px;
+
+            transition: all 0.25s;
+
+            z-index: 2;
+        }
+
+
+        /* Stage 2 기준점 */
+
+        #foodAnchor {
+            position: absolute;
+
+            width: 100px;
+            height: 100px;
+
+            display: none;
+
+            background: #88b04b;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 32px;
+
+            z-index: 2;
+        }
+
+
+        /* =========================
+           오른쪽 Editor
+        ========================= */
+
+        .editor-panel {
+            width: 420px;
+
+            display: flex;
+            flex-direction: column;
+
+            background: #1e1e1e;
+            color: white;
+        }
+
+        .editor-title {
+            padding: 20px;
+
+            background: #292929;
+
+            border-bottom: 1px solid #444;
+        }
+
+        .editor-title h2 {
+            margin: 0 0 8px;
+        }
+
+        .editor-title p {
+            margin: 0;
+
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        .editor {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .selector {
+            color: #ffd166;
+
+            font-family: Consolas, monospace;
+            font-size: 18px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+
+            margin-top: 10px;
+            padding: 15px;
+
+            resize: none;
+
+            border: none;
+            outline: none;
+
+            background: #111;
+            color: #8be28b;
+
+            font-family: Consolas, monospace;
+            font-size: 17px;
+
+            line-height: 1.7;
+        }
+
+        button {
+            width: 100%;
+
+            margin-top: 15px;
+            padding: 14px;
+
+            border: none;
+            border-radius: 6px;
+
+            background: #49a078;
+
+            color: white;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3b8765;
+        }
+
+
+        /* 다음 Stage 버튼 */
+
+        #nextButton {
+            display: none;
+
+            background: #e89b3c;
+        }
+
+        #nextButton:hover {
+            background: #c77e29;
+        }
+
+
+        #message {
+            margin-top: 20px;
+
+            min-height: 55px;
+
+            padding: 15px;
+
+            background: #292929;
+
+            border-radius: 6px;
+
+            line-height: 1.6;
+        }
+
+        .success {
+            color: #70e000;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+
+        .hint {
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: #333;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+            color: #ccc;
+
+            line-height: 1.6;
+        }
+
+        code {
+            color: #ffd166;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>🍱 My Diner</h1>
+
+    <div id="levelText">
+        Level 1 / 2
+    </div>
+
+</header>
+
+
+<div class="game">
+
+
+    <!-- =============================
+         게임 화면
+    ============================== -->
+
+    <section class="game-area">
+
+        <div class="mission">
+
+            <h2 id="missionTitle"></h2>
+
+            <p id="missionDescription"></p>
+
+        </div>
+
+
+        <div class="lunchbox" id="lunchbox">
+
+            <div class="target" id="target">
+                TARGET
+            </div>
+
+            <div id="foodAnchor">
+                🍚
+            </div>
+
+            <div id="food">
+                🍳
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =============================
+         CSS Editor
+    ============================== -->
+
+    <aside class="editor-panel">
+
+        <div class="editor-title">
+
+            <h2>CSS Editor</h2>
+
+            <p id="editorDescription">
+                반찬의 CSS를 수정하세요.
+            </p>
+
+        </div>
+
+
+        <div class="editor">
+
+            <div class="selector">
+                .food {
+            </div>
+
+            <textarea
+                id="cssInput"
+                spellcheck="false"
+            ></textarea>
+
+            <div class="selector">
+                }
+            </div>
+
+
+            <button id="runButton">
+                Run CSS
+            </button>
+
+
+            <button id="nextButton">
+                다음 스테이지 →
+            </button>
+
+
+            <div id="message">
+                CSS를 입력해보세요.
+            </div>
+
+
+            <div
+                class="hint"
+                id="hint"
+            ></div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+<script src="./js/MyDiner.js"></script>
+</body>
+</html>
